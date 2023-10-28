@@ -18,9 +18,13 @@ This component handles all aspects related to taking damage and managing health 
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[dotnet]
+
+project/assembly_name="GodotParadiseHealthComponent"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/health_component/plugin.cfg", "res://addons/jjajajaja/plugin.cfg")
+enabled=PackedStringArray()
 
 [rendering]
 

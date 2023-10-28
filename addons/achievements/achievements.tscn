@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cee7sw7xiuk2w"]
+
+[ext_resource type="Script" path="res://addons/achievements/GodotParadiseAchievements.cs" id="1_s7sqe"]
+
+[node name="GodotParadiseAchievements" type="Node"]
+script = ExtResource("1_s7sqe")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
