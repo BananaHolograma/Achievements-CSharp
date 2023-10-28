@@ -18,18 +18,18 @@ Implementa un sistema de logros en tu juego de forma sencilla y con unas prácti
 
 - [Requerimientos](#requerimientos)
 - [✨Instalacion](#instalacion)
-	- [Automatica (Recomendada)](#automatica-recomendada)
-	- [Manual](#manual)
-	- [CSharp version](#csharp-version)
+  - [Automatica (Recomendada)](#automatica-recomendada)
+  - [Manual](#manual)
+  - [GDScript version](#gdscript-version)
 - [Como empezar](#como-empezar)
 - [Ready](#ready)
 - [Estructura del archivo de logros](#estructura-del-archivo-de-logros)
 - [Variables accessibles](#variables-accessibles)
 - [Funciones](#funciones)
-	- [get\_achievement(name: String) -\> Dictionary](#get_achievementname-string---dictionary)
-	- [update\_achievement(name: String, data: Dictionary)](#update_achievementname-string-data-dictionary)
-	- [unlock\_achievement(name: String)](#unlock_achievementname-string)
-	- [reset\_achievement(name: String, data: Dictionary = {})](#reset_achievementname-string-data-dictionary--)
+  - [Dictionary GetAchievement(string name)](#dictionary-getachievementstring-name)
+  - [UpdateAchievement(string name, Dictionary data)](#updateachievementstring-name-dictionary-data)
+  - [UnlockAchievement(string name)](#unlockachievementstring-name)
+  - [ResetAchievement(string name, Dictionary data)](#resetachievementstring-name-dictionary-data)
 - [Señales](#señales)
 - [✌️Eres bienvenido a](#️eres-bienvenido-a)
 - [🤝Normas de contribución](#normas-de-contribución)
@@ -45,9 +45,8 @@ Implementa un sistema de logros en tu juego de forma sencilla y con unas prácti
 Puedes descargar este plugin desde la [Godot asset library](https://godotengine.org/asset-library/asset/2039) oficial usando la pestaña AssetLib de tu editor Godot. Una vez instalado, estás listo para empezar
 ## Manual 
 Para instalar manualmente el plugin, crea una carpeta **"addons"** en la raíz de tu proyecto Godot y luego descarga el contenido de la carpeta **"addons"** de este repositorio
-## CSharp version
-Este plugin también ha sido escrito en CSHarp, puedes encontrarlo en [Achievements-CSharp](https://github.com/GodotParadise/Achievements-CSharp)
-
+## GDScript version
+Este plugin también ha sido escrito en GDScript, puedes encontrarlo en [Achievements](https://github.com/GodotParadise/Achievements)
 
 # Como empezar
 Puedes acceder a esta funcionalidad usando la clase `GodotParadiseAchievements` donde puedes interactuar con tu archivo fuente.
@@ -67,7 +66,7 @@ Antes de empezar es necesario establecer algunos ajustes del proyecto que estar�
 
 # Ready
 Cuando este nodo está listo y entra en el arbol de escenas, realiza varias acciones:
-1. Se conecta a la señal `achievement_updated`, que actualiza el archivo cifrado y comprueba si se han desbloqueado todos los logros. Si todos los logros están desbloqueados, emite la señal `all_achievements_unlocked`.
+1. Se conecta a la señal `AchievementUpdated`, que actualiza el archivo cifrado y comprueba si se han desbloqueado todos los logros. Si todos los logros están desbloqueados, emite la señal `AllAchievementsUnlocked`.
 2. Crea el directorio de guardado utilizando la ruta definida en **ProjectSettings.**
 3. Prepara los logros dentro de la clase leyendo de las fuentes definidas en **ProjectSettings.**
 4. Sincroniza la última actualización de logros desde el archivo guardado encriptado si existe.
@@ -92,37 +91,37 @@ Es importante tener en cuenta que no todos los logros tendrán un requisito de `
 Esta clase sirve de ayuda para actualizar y desbloquear logros mientras emite las señales apropiadas para la interacción.
 
 # Variables accessibles
-- current_achievements: Dictionary = {}
-- unlocked_achievements: Dictionary = {}
-- achievements_keys: PackedStringArray = []
+- Dictionary CurrentAchievements
+- Dictionary UnlockedAchievements
+- List<string> AchievementKeys
 - 
 # Funciones
-## get_achievement(name: String) -> Dictionary
+## Dictionary GetAchievement(string name)
 Recupera la información del logro deseado, si el nombre no existe como clave devolverá un diccionario vacío.
 
-`GodotEssentialsAchievements.get_achievement("orcs_party")`
+`GodotEssentialsAchievements.GetAchievement("orcs_party")`
 
-## update_achievement(name: String, data: Dictionary)
-Esta función actualiza las propiedades del logro seleccionado, con valores del diccionario de datos que sustituyen a los existentes. Esta acción también emite la señal `achievement_updated`
+## UpdateAchievement(string name, Dictionary data)
+Esta función actualiza las propiedades del logro seleccionado, con valores del diccionario de datos que sustituyen a los existentes. Esta acción también emite la señal `AchievementUpdated`
 
-`GodotEssentialsAchievements.update_achievement("orcs_party", {"current_progress": 0.55})`
+`GodotEssentialsAchievements.UpdateAchievement("orcs_party", {"current_progress": 0.55})`
 
-## unlock_achievement(name: String)
-Si el logro no estaba desbloqueado previamente, esta función cambia la variable `unlocked` a true y emite la señal `achievement_unlocked`. Esta acción desbloquea directamente el logro sin más comprobaciones.
+## UnlockAchievement(string name)
+Si el logro no estaba desbloqueado previamente, esta función cambia la variable `unlocked` a true y emite la señal `AchievementUnlocked`. Esta acción desbloquea directamente el logro sin más comprobaciones.
 
-`GodotEssentialsAchievements.unlock_achievement("orcs_party")`
+`GodotEssentialsAchievements.AchievementUnlocked("orcs_party")`
 
-## reset_achievement(name: String, data: Dictionary = {})
+## ResetAchievement(string name, Dictionary data)
 Restablece el logro a un estado anterior. Los valores `current_progress` y `unlocked` se pondrán a 0 y false respectivamente. Puedes pasar como segundo parámetro los datos que quieras actualizar en este proceso.
-Esta acción también emite las señales `achievement_reset` y `achievement_updated`.
+Esta acción también emite las señales `AchievementReset` y `AchievementUpdated`.
 
-`GodotEssentialsAchievements.reset_achievement("orcs_party", {"description": "An orc party was discovered"})`
+`GodotEssentialsAchievements.ResetAchievement("orcs_party", {"description": "An orc party was discovered"})`
 
 # Señales
-- *achievement_unlocked(name: String, achievement: Dictionary)*
-- *achievement_updated(name: String, achievement: Dictionary)* 
-- *achievement_reset(name: String, achievement: Dictionary)*
-- *all_achievements_unlocked*
+- *AchievementUnlocked(string name, Dictionary achievement)*
+- *AchievementUpdated(string name, Dictionary achievement)* 
+- *AchievementReset(string name, Dictionary achievement)*
+- *AllAchievementsUnlocked*
 
 
 # ✌️Eres bienvenido a

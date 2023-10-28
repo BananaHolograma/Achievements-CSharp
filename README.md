@@ -15,21 +15,20 @@
 - - -
 
 Implement achievements in your game in a simple way and with minimal security practices.
-
 - [Requirements](#requirements)
 - [✨Installation](#installation)
-	- [Automatic (Recommended)](#automatic-recommended)
-	- [Manual](#manual)
-	- [CSharp version](#csharp-version)
+  - [Automatic (Recommended)](#automatic-recommended)
+  - [Manual](#manual)
+  - [GDScript version](#gdscript-version)
 - [Getting started](#getting-started)
 - [Ready](#ready)
 - [Achievement structure](#achievement-structure)
 - [Accessible variables](#accessible-variables)
 - [Functions](#functions)
-	- [get\_achievement(name: String) -\> Dictionary](#get_achievementname-string---dictionary)
-	- [update\_achievement(name: String, data: Dictionary)](#update_achievementname-string-data-dictionary)
-	- [unlock\_achievement(name: String)](#unlock_achievementname-string)
-	- [reset\_achievement(name: String, data: Dictionary = {})](#reset_achievementname-string-data-dictionary--)
+  - [Dictionary GetAchievement(string name)](#dictionary-getachievementstring-name)
+  - [UpdateAchievement(string name, Dictionary data)](#updateachievementstring-name-dictionary-data)
+  - [UnlockAchievement(string name)](#unlockachievementstring-name)
+  - [ResetAchievement(string name, Dictionary data)](#resetachievementstring-name-dictionary-data)
 - [Signals](#signals)
 - [✌️You are welcome to](#️you-are-welcome-to)
 - [🤝Contribution guidelines](#contribution-guidelines)
@@ -45,8 +44,8 @@ Implement achievements in your game in a simple way and with minimal security pr
 You can download this plugin from the official [Godot asset library](https://godotengine.org/asset-library/asset/2039) using the AssetLib tab in your godot editor. Once installed, you're ready to get started
 ##  Manual 
 To manually install the plugin, create an **"addons"** folder at the root of your Godot project and then download the contents from the **"addons"** folder of this repository
-## CSharp version
-This plugin has also been written in CSHarp, you can find it on [Achievements-CSharp](https://github.com/GodotParadise/Achievements-CSharp)
+## GDScript version
+This plugin has also been written in CSHarp, you can find it on [Achievements](https://github.com/GodotParadise/Achievements)
 
 
 # Getting started
@@ -67,7 +66,7 @@ Before start you need to set few project settings that will be available after l
 
 # Ready
 When this node becomes ready, it performs several actions:
-1. It connects itself to the `achievement_updated` signal, which updates the encrypted file and checks if all achievements have been unlocked. If all achievements are unlocked, it emits the `all_achievements_unlocked` signal.
+1. It connects itself to the `AchievementUpdated` signal, which updates the encrypted file and checks if all achievements have been unlocked. If all achievements are unlocked, it emits the `AllAchievementsUnlocked` signal.
 2. It creates the save directory using the path defined in **ProjectSettings**.
 3. It prepares the achievements within the class by reading from the sources defined in **ProjectSettings**
 4. Sync the latest achievements update from the encrypted saved file if it exists
@@ -93,37 +92,37 @@ It's important to note that not all achievements will have a `count_goal` requir
 This class serves as a helper for updating and unlocking achievements while emitting the appropriate signals for interaction.
 
 # Accessible variables
-- current_achievements: Dictionary = {}
-- unlocked_achievements: Dictionary = {}
-- achievements_keys: PackedStringArray = []
+- Dictionary CurrentAchievements
+- Dictionary UnlockedAchievements
+- List<string> AchievementKeys
 
 # Functions
-## get_achievement(name: String) -> Dictionary
+## Dictionary GetAchievement(string name)
 Retrieve the information from the desired achievement, if the name does not exist as key it will return an empty dictionary.
 
-`GodotEssentialsAchievements.get_achievement("orcs_party")`
+`GodotParadiseAchievements.GetAchievement("orcs_party")`
 
-## update_achievement(name: String, data: Dictionary)
-This function updates the properties of the selected achievement, with values from the data dictionary overriding the existing ones. This action also emits the `achievement_updated` signal.
+## UpdateAchievement(string name, Dictionary data)
+This function updates the properties of the selected achievement, with values from the data dictionary overriding the existing ones. This action also emits the `AchievementUpdated` signal.
 
-`GodotEssentialsAchievements.update_achievement("orcs_party", {"current_progress": 0.55})`
+`GodotParadiseAchievements.UpdateAchievement("orcs_party", {"current_progress": 0.55})`
 
-## unlock_achievement(name: String)
-If the achievement was not previously unlocked, this function changes the `unlocked` variable to true and emits the `achievement_unlocked` signal. This action directly unlocks the achievement without further checks.
+## UnlockAchievement(string name)
+If the achievement was not previously unlocked, this function changes the `unlocked` variable to true and emits the `AchievementUnlocked` signal. This action directly unlocks the achievement without further checks.
 
-`GodotEssentialsAchievements.unlock_achievement("orcs_party")`
+`GodotParadiseAchievements.UnlockAchievement("orcs_party")`
 
-## reset_achievement(name: String, data: Dictionary = {})
+## ResetAchievement(string name, Dictionary data)
 Reset the achievement to a previous state. The `current_progress` and `unlocked` will be set to 0 and false respectively. You can pass as second parameter the data you want to update in this process.
-This action also emits the `achievement_reset` and `achievement_updated` signals.
+This action also emits the `AchievementReset` and `AchievementUpdated` signals.
 
-`GodotEssentialsAchievements.reset_achievement("orcs_party", {"description": "An orc party was discovered"})`
+`GodotParadiseAchievements.ResetAchievement("orcs_party", {"description": "An orc party was discovered"})`
 
 # Signals
-- *achievement_unlocked(name: String, achievement: Dictionary)*
-- *achievement_updated(name: String, achievement: Dictionary)* 
-- *achievement_reset(name: String, achievement: Dictionary)*
-- *all_achievements_unlocked*
+- *AchievementUnlocked(string name, Dictionary achievement)*
+- *AchievementUpdated(string name, Dictionary achievement)* 
+- *AchievementReset(string name, Dictionary achievement)*
+- *AllAchievementsUnlocked*
 
 # ✌️You are welcome to
 - [Give feedback](https://github.com/GodotParadise/Achievements-CSharp/pulls)
