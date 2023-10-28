@@ -15,7 +15,6 @@
 - - -
 
 Implementa un sistema de logros en tu juego de forma sencilla y con unas prácticas de seguridad mínimas.
-
 - [Requerimientos](#requerimientos)
 - [✨Instalacion](#instalacion)
   - [Automatica (Recomendada)](#automatica-recomendada)
